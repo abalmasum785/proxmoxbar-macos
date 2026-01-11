@@ -46,7 +46,7 @@ struct MenuBarView: View {
         
         // Try Bundle.main (Production/Manual Build)
         if let resourcePath = Bundle.main.resourcePath {
-            let iconPath = resourcePath + "/Assets/MenuBarIcon.png"
+            let iconPath = resourcePath + "/MenuBarIcon.png"
             if let image = NSImage(contentsOfFile: iconPath) {
                  image.isTemplate = true
                  return image
