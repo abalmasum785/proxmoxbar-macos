@@ -80,7 +80,7 @@ class ProxmoxViewModel: ObservableObject {
                 self.vms = []
                 self.appState = .stopped
                 if self.settings.servers.isEmpty {
-                    self.errorMessage = "Please configure Proxmox Settings."
+                    self.errorMessage = nil // Handled by empty state UI
                 } else {
                      self.errorMessage = "Select a server."
                 }
@@ -91,7 +91,7 @@ class ProxmoxViewModel: ObservableObject {
         await MainActor.run {
             if case .running = appState {
             } else {
-                appState = .loading("Loading...")
+                appState = .loading("LOADING...")
             }
             errorMessage = nil
         }
@@ -113,7 +113,7 @@ class ProxmoxViewModel: ObservableObject {
         } catch {
             await MainActor.run {
                 self.appState = .error(error.localizedDescription)
-                self.errorMessage = "\(server.name): \(error.localizedDescription)"
+                self.errorMessage = error.localizedDescription
             }
         }
     }
