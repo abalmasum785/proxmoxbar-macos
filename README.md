@@ -54,6 +54,10 @@ We welcome contributions! Please see our [CONTRIBUTING.md](https://github.com/ry
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
+
+[![Star History Chart](https://api.star-history.com/svg?repos=ryzenixx/proxmoxbar-macos&type=date&legend=top-left)](https://www.star-history.com/#ryzenixx/proxmoxbar-macos&type=date&legend=top-left)
+
+
 ---
 
 <div align="center">
