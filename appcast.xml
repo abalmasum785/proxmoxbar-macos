@@ -3,12 +3,26 @@
     <channel>
         <title>ProxmoxBar</title>
         <item>
-            <title>1.0.0</title>
-            <pubDate>Sun, 11 Jan 2026 19:29:11 +0000</pubDate>
-            <sparkle:version>1.0.0</sparkle:version>
-            <sparkle:shortVersionString>1.0.0</sparkle:shortVersionString>
+            <title>1.0.1</title>
+            <pubDate>Sun, 11 Jan 2026 20:12:55 +0000</pubDate>
+            <sparkle:version>1.0.1</sparkle:version>
+            <sparkle:shortVersionString>1.0.1</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/ryzenixx/proxmoxbar-macos/releases/download/v1.0.0/ProxmoxBar.dmg" length="1218272" type="application/octet-stream" sparkle:edSignature="ivWiVqO+ZkZ15WjNIJOJ/TRbM1Q6n0PWrrexw+A7VqGNT0Mo6fvMjW9G0MP0lxMqqhxTOMWgPSjvIskqZ1SUBQ=="/>
-        </item>
+            <enclosure url="https://github.com/ryzenixx/proxmoxbar-macos/releases/download/v1.0.1/ProxmoxBar.dmg" length="1219823" type="application/octet-stream" sparkle:edSignature="DEOSL6eGgoJV5ypX8/nb6RWMg91f220LsViAgKgOKtkAK3jzj/nT74TJSN734vMnuK/EzPx14n6Bl9on2dpWBQ=="/>
+        <description><![CDATA[<h1 id="release-1.0.1">Release 1.0.1 🖥️</h1>
+<h3 id="added">Added</h3>
+<ul>
+<li><strong>Branding</strong>: Implemented custom Proxmox Menu Bar Icon
+(replacing generic server symbol).</li>
+<li><strong>Network</strong>: Enabled
+<code>NSAllowsArbitraryLoads</code> to resolve “TLS Error” for users
+with strict self-signed certs.</li>
+</ul>
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li><strong>UI</strong>: Removed redundant divider after the last item
+in the resource list.</li>
+</ul>
+]]></description></item>
     </channel>
 </rss>
