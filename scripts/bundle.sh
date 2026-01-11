@@ -85,6 +85,11 @@ cat > "$CONTENTS_PATH/Info.plist" <<EOF
     <true/>
     <key>SUScheduledCheckInterval</key>
     <integer>3600</integer>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
 </dict>
 </plist>
 EOF
