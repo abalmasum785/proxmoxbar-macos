@@ -99,7 +99,7 @@ struct MenuBarView: View {
                             }
                         } label: {
                             HStack(spacing: 4) {
-                                Text(viewModel.selectedServerId == nil ? "All Servers" : (settings.servers.first(where: { $0.id == viewModel.selectedServerId })?.name ?? "Unknown"))
+                                Text(viewModel.selectedServerId == nil ? "no server selected" : (settings.servers.first(where: { $0.id == viewModel.selectedServerId })?.name ?? "Unknown"))
                                     .font(.system(size: 14, weight: .bold))
                                     .foregroundColor(.primary)
                             }
@@ -158,16 +158,6 @@ struct MenuBarView: View {
                             .foregroundColor(.secondary)
                     }
                     .frame(height: 30)
-                } else if let errorMsg = viewModel.errorMessage {
-                    HStack(spacing: 8) {
-                         Image(systemName: "exclamationmark.triangle.fill")
-                             .foregroundColor(.red)
-                         Text(errorMsg)
-                             .font(.system(size: 11, weight: .medium))
-                             .foregroundColor(.red)
-                             .lineLimit(1)
-                     }
-                     .frame(height: 30)
                 } else {
                     HStack(spacing: 10) {
                         ActionStatusButton(icon: "arrow.triangle.2.circlepath", label: "Refresh") {
@@ -223,19 +213,86 @@ struct MenuBarView: View {
             .padding(.horizontal)
             .padding(.vertical, 8)
             
-            ScrollView(showsIndicators: false) {
-                LazyVStack(spacing: 0) {
-                    if viewModel.filteredVMs.isEmpty {
-                        Text("No VMs found")
+            if viewModel.filteredVMs.isEmpty {
+                VStack {
+                    if settings.servers.isEmpty {
+                        Text("No server found")
                             .foregroundColor(.secondary)
                             .padding(.top, 40)
-                        if !settings.isValid {
-                             Button("Open Settings") {
-                                 withAnimation { currentScreen = .settings }
-                             }
-                             .padding()
+                        
+                        Button("Add a Server") {
+                            withAnimation { currentScreen = .settings }
                         }
+                        .padding()
+                        Spacer()
+                    } else if let fullError = viewModel.errorMessage {
+                        let (title, description) = {
+                            let parts = fullError.components(separatedBy: ": ")
+                            if parts.count > 1 {
+                                return (parts[0], parts.dropFirst().joined(separator: ": "))
+                            } else {
+                                return ("Error", fullError)
+                            }
+                        }()
+                        
+                        VStack(spacing: 4) {
+                            Image(systemName: "exclamationmark.triangle")
+                                .font(.system(size: 22))
+                                .foregroundColor(.red)
+                                .padding(.bottom, 4)
+                            
+                            Text(title)
+                                .font(.system(size: 11, weight: .bold))
+                                .foregroundColor(.secondary)
+                                .multilineTextAlignment(.center)
+                            
+                            Text(description)
+                                .font(.system(size: 11))
+                                .foregroundColor(.secondary)
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal)
+                        }
+                        .padding(.top, 40)
+                        Spacer()
                     } else {
+                        Spacer()
+                        Text("No VMs found")
+                            .foregroundColor(.secondary)
+                        Spacer()
+                        
+                        if viewModel.searchText.isEmpty {
+                            HStack(alignment: .top, spacing: 10) {
+                                Image(systemName: "exclamationmark.triangle.fill")
+                                    .foregroundColor(.orange)
+                                    .font(.system(size: 14))
+                                
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("Missing Resources?")
+                                        .font(.system(size: 12, weight: .bold))
+                                        .foregroundColor(.primary)
+                                    Text("Ensure 'Privilege Separation' is unchecked in your API Token settings.")
+                                        .font(.system(size: 11))
+                                        .foregroundColor(.secondary)
+                                        .fixedSize(horizontal: false, vertical: true)
+                                }
+                                Spacer()
+                            }
+                            .padding(10)
+                            .background(Color.orange.opacity(0.1))
+                            .cornerRadius(8)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.orange.opacity(0.3), lineWidth: 1)
+                            )
+                            .padding(.horizontal)
+                            .padding(.bottom, 20)
+                        }
+                    }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                ScrollView(showsIndicators: false) {
+                    LazyVStack(spacing: 0) {
                         HStack {
                             Text("\(viewModel.filteredVMs.count) \(viewModel.filteredVMs.count == 1 ? "RESOURCE" : "RESOURCES")")
                                 .font(.system(size: 10, weight: .bold))
