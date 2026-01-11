@@ -82,9 +82,10 @@ struct MenuBarView: View {
         })
         .background(CursorFixView())
         .background(VisualEffectView(material: .popover, blendingMode: .behindWindow, state: .active))
-        .onAppear {
-            Task {
+        .task {
+            while !Task.isCancelled {
                 await viewModel.loadData()
+                try? await Task.sleep(nanoseconds: 5_000_000_000) // 5s
             }
         }
     }
