@@ -3,6 +3,7 @@ import SwiftUI
 struct SettingsView: View {
     @ObservedObject var settings: SettingsService
     @ObservedObject var launchService: LaunchAtLoginService
+    @ObservedObject var updaterController: UpdaterController
     var onBack: () -> Void
     
     @State private var showAddServer = false
@@ -114,9 +115,94 @@ struct SettingsView: View {
                         }
                     }
                     
+                    // Updates Section
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("UPDATES")
+                            .font(.caption)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.secondary)
+                            .padding(.horizontal, 4)
+                        
+                        Button(action: {
+                            #if !DEBUG
+                            updaterController.checkForUpdates()
+                            #endif
+                        }) {
+                            HStack {
+                                Image(systemName: "arrow.triangle.2.circlepath")
+                                    #if DEBUG
+                                    .foregroundColor(.secondary)
+                                    #else
+                                    .foregroundColor(.primary)
+                                    #endif
+                                    .font(.system(size: 16))
+                                
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("Check for Updates")
+                                        .font(.system(size: 13, weight: .medium))
+                                        #if DEBUG
+                                        .foregroundColor(.secondary)
+                                        #else
+                                        .foregroundColor(.primary)
+                                        #endif
+                                    
+                                    #if DEBUG
+                                    Text("Updater disabled in development build")
+                                        .font(.system(size: 11))
+                                        .foregroundColor(.secondary)
+                                    #else
+                                    Text("Current Version: \(AppConfig.appVersion)")
+                                        .font(.system(size: 11))
+                                        .foregroundColor(.secondary)
+                                    #endif
+                                }
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .font(.system(size: 12))
+                                    .foregroundColor(.secondary.opacity(0.5))
+                            }
+                            .padding(12)
+                            .background(Color.primary.opacity(0.03))
+                            .cornerRadius(8)
+                        }
+                        .buttonStyle(.plain)
+                        #if DEBUG
+                        .disabled(true)
+                        #endif
+                    }
+                    
                 }
                 .padding(20)
             }
+            
+            Spacer()
+            
+            // Footer
+            VStack(spacing: 2) {
+                Text(AppConfig.appName)
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+                
+                #if DEBUG
+                Text("version 0.0.0 | development build")
+                    .font(.caption2)
+                    .foregroundColor(.secondary.opacity(0.6))
+                #else
+                Text("version \(AppConfig.appVersion) | release build")
+                    .font(.caption2)
+                    .foregroundColor(.secondary.opacity(0.6))
+                #endif
+                
+                Button("View on GitHub") {
+                    if let url = URL(string: "https://github.com/ryzenixx/proxmoxbar-macos") {
+                        NSWorkspace.shared.open(url)
+                    }
+                }
+                .buttonStyle(.link)
+                .font(.caption2)
+                .padding(.top, 2)
+            }
+            .padding(.bottom, 16)
         }
         .background(CursorFixView())
         .sheet(isPresented: $showAddServer) {

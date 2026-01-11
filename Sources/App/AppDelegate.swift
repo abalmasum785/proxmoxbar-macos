@@ -14,8 +14,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         popover.behavior = .transient
         
         let launchService = LaunchAtLoginService()
+        let updaterController = UpdaterController()
+        
         popover.contentViewController = NSHostingController(
-            rootView: MenuBarView(viewModel: appState.viewModel, settings: appState.settings, launchService: launchService)
+            rootView: MenuBarView(
+                viewModel: appState.viewModel,
+                settings: appState.settings,
+                launchService: launchService,
+                updaterController: updaterController
+            )
                 .frame(width: 380, height: 500)
         )
         

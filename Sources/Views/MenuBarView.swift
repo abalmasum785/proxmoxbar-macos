@@ -4,6 +4,7 @@ struct MenuBarView: View {
     @ObservedObject var viewModel: ProxmoxViewModel
     @ObservedObject var settings: SettingsService
     @ObservedObject var launchService: LaunchAtLoginService
+    @ObservedObject var updaterController: UpdaterController
     
     @Environment(\.colorScheme) var colorScheme
     
@@ -42,7 +43,7 @@ struct MenuBarView: View {
                 dashboardContent
                     .transition(.move(edge: .leading))
             } else {
-                SettingsView(settings: settings, launchService: launchService) {
+                SettingsView(settings: settings, launchService: launchService, updaterController: updaterController) {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
                         currentScreen = .dashboard
                     }
