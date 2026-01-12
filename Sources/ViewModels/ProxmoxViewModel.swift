@@ -176,5 +176,30 @@ class ProxmoxViewModel: ObservableObject {
             }
         }
     }
+    
+    func restartVM(_ vm: ProxmoxVM) async {
+        guard let serverId = vm.serverId,
+              let server = settings.servers.first(where: { $0.id == serverId }) else { return }
+        
+        isActionInProgress = true
+        defer { isActionInProgress = false }
+        
+        do {
+            try await service.performNodeAction(
+                node: vm.node,
+                vmid: vm.vmid,
+                type: vm.type,
+                action: "reboot",
+                url: server.url,
+                authHeader: server.authHeader
+            )
+            try? await Task.sleep(nanoseconds: 1_000_000_000)
+            await loadData()
+        } catch {
+            await MainActor.run {
+                self.errorMessage = "Restart failed: \(error.localizedDescription)"
+            }
+        }
+    }
 
 }

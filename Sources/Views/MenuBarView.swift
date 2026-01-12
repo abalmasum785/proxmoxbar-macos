@@ -456,6 +456,23 @@ struct VMRow: View {
 
             Spacer()
 
+            if vm.isRunning {
+                Button {
+                    Task {
+                        await viewModel.restartVM(vm)
+                    }
+                } label: {
+                    Image(systemName: "arrow.clockwise")
+                        .font(.system(size: 10))
+                        .foregroundColor(.orange)
+                        .frame(width: 20, height: 20)
+                        .background(Color.primary.opacity(0.1))
+                        .clipShape(Circle())
+                }
+                .buttonStyle(.plain)
+                .help("Restart")
+            }
+
             Button {
                 Task {
                     await viewModel.toggleVMState(vm)
