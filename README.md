@@ -1,6 +1,10 @@
 <div align="center">
 
-  <img src=".github/assets/proxmoxbar.png" alt="ProxmoxBar" width="300">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset=".github/assets/proxmoxbar_dark.png">
+    <source media="(prefers-color-scheme: light)" srcset=".github/assets/proxmoxbar_light.png">
+    <img alt="ProxmoxBar" src=".github/assets/proxmoxbar_light.png" width="300">
+  </picture>
 
   # ProxmoxBar 🖥️
 
