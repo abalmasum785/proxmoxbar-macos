@@ -3,25 +3,31 @@
     <channel>
         <title>ProxmoxBar</title>
         <item>
-            <title>1.0.1</title>
-            <pubDate>Sun, 11 Jan 2026 20:12:55 +0000</pubDate>
-            <sparkle:version>1.0.1</sparkle:version>
-            <sparkle:shortVersionString>1.0.1</sparkle:shortVersionString>
+            <title>1.0.2</title>
+            <pubDate>Mon, 12 Jan 2026 00:20:31 +0000</pubDate>
+            <sparkle:version>1.0.2</sparkle:version>
+            <sparkle:shortVersionString>1.0.2</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/ryzenixx/proxmoxbar-macos/releases/download/v1.0.1/ProxmoxBar.dmg" length="1219823" type="application/octet-stream" sparkle:edSignature="DEOSL6eGgoJV5ypX8/nb6RWMg91f220LsViAgKgOKtkAK3jzj/nT74TJSN734vMnuK/EzPx14n6Bl9on2dpWBQ=="/>
-        <description><![CDATA[<h1 id="release-1.0.1">Release 1.0.1 🖥️</h1>
+            <enclosure url="https://github.com/ryzenixx/proxmoxbar-macos/releases/download/v1.0.2/ProxmoxBar.dmg" length="1246056" type="application/octet-stream" sparkle:edSignature="KPjiO9jAtMw6PEQqdzHpon2QYhnMMIWBTjqafjyCi4yV+s1kTQuCFjQI28gOUF5AmhDF2PXtZFxB3i1wFJTXAA=="/>
+        <description><![CDATA[<h1 id="release-1.0.2">Release 1.0.2 🖥️</h1>
 <h3 id="added">Added</h3>
 <ul>
-<li><strong>Branding</strong>: Implemented custom Proxmox Menu Bar Icon
-(replacing generic server symbol).</li>
-<li><strong>Network</strong>: Enabled
-<code>NSAllowsArbitraryLoads</code> to resolve “TLS Error” for users
-with strict self-signed certs.</li>
+<li><strong>Cluster Stats</strong>: Added a unified “Datacenter” view in
+the header showing aggregated CPU, RAM, and Disk usage for the entire
+cluster.</li>
+<li><strong>Storage</strong>: Improved storage calculation by retrieving
+all storage pools from the cluster (<code>/cluster/resources</code>),
+ensuring accurate total disk usage reporting.</li>
+<li><strong>UI</strong>: Added dynamic color coding for resource gauges
+(Gray/Orange/Red) based on usage thresholds.</li>
 </ul>
-<h3 id="fixed">Fixed</h3>
+<h3 id="changed">Changed</h3>
 <ul>
-<li><strong>UI</strong>: Removed redundant divider after the last item
-in the resource list.</li>
+<li><strong>Architecture</strong>: Refactored statistics to focus on
+Cluster-level aggregation rather than individual nodes in the
+header.</li>
+<li><strong>UI</strong>: Simplified the header statistics display for a
+cleaner, reliable look.</li>
 </ul>
 ]]></description></item>
     </channel>
