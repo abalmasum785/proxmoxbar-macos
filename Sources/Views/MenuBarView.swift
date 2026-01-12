@@ -188,7 +188,15 @@ struct MenuBarView: View {
                 }
                 .padding(.horizontal)
                 .padding(.top, 16)
-                .padding(.bottom, 16)
+                .padding(.bottom, viewModel.clusterStats == nil ? 16 : 4)
+
+                if let stats = viewModel.clusterStats {
+                    VStack(spacing: 8) {
+                        ClusterStatsRow(node: stats)
+                    }
+                    .padding(.horizontal)
+                    .padding(.bottom, 16)
+                }
             }
             .background(.thinMaterial)
 

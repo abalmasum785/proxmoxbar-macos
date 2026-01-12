@@ -47,7 +47,7 @@ actor ProxmoxService {
         self.session = URLSession(configuration: config, delegate: delegateProxy, delegateQueue: nil)
     }
     
-    func refreshData(url: String, authHeader: String) async throws -> (ProxmoxServiceStatus, [ProxmoxVM]) {
+    func refreshData(url: String, authHeader: String) async throws -> (ProxmoxServiceStatus, [ProxmoxNode], [ProxmoxStorage], [ProxmoxVM]) {
         guard let baseURL = URL(string: url) else { throw ProxmoxError.invalidURL }
         
         let endpoint = baseURL.appendingPathComponent("/api2/json/cluster/resources")
@@ -104,7 +104,45 @@ actor ProxmoxService {
                 }
                 .sorted { $0.vmid < $1.vmid }
                 
-                return (.running, vms)
+                let nodes: [ProxmoxNode] = result.data.compactMap { item in
+                    guard let type = item.type,
+                          type == "node",
+                          let node = item.node,
+                          let status = item.status else {
+                        return nil
+                    }
+                    
+                    return ProxmoxNode(
+                        node: node,
+                        status: status,
+                        cpu: item.cpu,
+                        maxcpu: item.maxcpu,
+                        mem: item.mem,
+                        maxmem: item.maxmem,
+                        disk: item.disk,
+                        maxdisk: item.maxdisk
+                    )
+                }
+                
+                let storages: [ProxmoxStorage] = result.data.compactMap { item in
+                    guard let type = item.type,
+                          type == "storage",
+                          let storage = item.storage,
+                          let node = item.node,
+                          let status = item.status else {
+                        return nil
+                    }
+                    
+                    return ProxmoxStorage(
+                        storage: storage,
+                        node: node,
+                        status: status,
+                        disk: item.disk,
+                        maxdisk: item.maxdisk
+                    )
+                }
+                
+                return (.running, nodes, storages, vms)
                 
             } catch {
                 lastError = error

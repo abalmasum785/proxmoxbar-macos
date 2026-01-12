@@ -5,6 +5,8 @@ import AppKit
 @MainActor
 class ProxmoxViewModel: ObservableObject {
     @Published var vms: [ProxmoxVM] = []
+    @Published var nodes: [ProxmoxNode] = []
+    @Published var storages: [ProxmoxStorage] = []
     @Published var appState: ProxmoxServiceStatus = .stopped
     @Published var errorMessage: String?
     @Published var searchText: String = ""
@@ -66,6 +68,33 @@ class ProxmoxViewModel: ObservableObject {
         return result
     }
     
+    var clusterStats: ProxmoxNode? {
+        guard !nodes.isEmpty else { return nil }
+        
+        let totalCores = nodes.reduce(0.0) { $0 + ($1.maxcpu ?? 0) }
+        let totalUsedCores = nodes.reduce(0.0) { $0 + ($1.cpu ?? 0) * ($1.maxcpu ?? 0) }
+        let totalCpu = totalCores > 0 ? totalUsedCores / totalCores : 0
+        
+        let totalMem = nodes.reduce(0) { $0 + ($1.mem ?? 0) }
+        let totalMaxMem = nodes.reduce(0) { $0 + ($1.maxmem ?? 0) }
+        
+        let totalDisk = storages.reduce(0) { $0 + ($1.disk ?? 0) }
+        let totalMaxDisk = storages.reduce(0) { $0 + ($1.maxdisk ?? 0) }
+        
+        let isOnline = nodes.contains { $0.isOnline }
+        
+        return ProxmoxNode(
+            node: "Datacenter",
+            status: isOnline ? "online" : "offline",
+            cpu: totalCpu,
+            maxcpu: totalCores,
+            mem: totalMem,
+            maxmem: totalMaxMem,
+            disk: totalDisk,
+            maxdisk: totalMaxDisk
+        )
+    }
+    
     func loadData() async {
         guard !isActionInProgress else { return }
         
@@ -98,7 +127,7 @@ class ProxmoxViewModel: ObservableObject {
         }
         
         do {
-            let (status, vms) = try await service.refreshData(url: server.url, authHeader: server.authHeader)
+            let (status, nodes, storages, vms) = try await service.refreshData(url: server.url, authHeader: server.authHeader)
             
             let taggedVMs = vms.map { vm -> ProxmoxVM in
                 var newVM = vm
@@ -110,6 +139,8 @@ class ProxmoxViewModel: ObservableObject {
             await MainActor.run {
                 self.appState = status
                 self.vms = taggedVMs
+                self.nodes = nodes
+                self.storages = storages
             }
         } catch {
             await MainActor.run {
