@@ -1,17 +1,31 @@
 import SwiftUI
 
-struct AddServerView: View {
+struct ServerFormView: View {
     @Environment(\.dismiss) var dismiss
     @ObservedObject var settings: SettingsService
+    
+    var existingServer: ProxmoxServerConfig?
     
     @State private var name: String = ""
     @State private var url: String = "https://"
     @State private var tokenId: String = ""
     @State private var secret: String = ""
     
+    init(settings: SettingsService, existingServer: ProxmoxServerConfig? = nil) {
+        self.settings = settings
+        self.existingServer = existingServer
+        
+        if let server = existingServer {
+            _name = State(initialValue: server.name)
+            _url = State(initialValue: server.url)
+            _tokenId = State(initialValue: server.tokenId)
+            _secret = State(initialValue: server.secret)
+        }
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Add Proxmox Node")
+            Text(existingServer == nil ? "Add Proxmox Node" : "Edit Proxmox Node")
                 .font(.headline)
             
             VStack(alignment: .leading, spacing: 4) {
@@ -118,8 +132,8 @@ struct AddServerView: View {
                 
                 Spacer()
                 
-                Button("Add Server") {
-                    addServer()
+                Button(existingServer == nil ? "Add Server" : "Save Changes") {
+                    save()
                 }
                 .keyboardShortcut(.defaultAction)
                 .buttonStyle(.borderedProminent)
@@ -132,14 +146,24 @@ struct AddServerView: View {
         .presentationBackground(.clear)
     }
     
-    private func addServer() {
-        let newServer = ProxmoxServerConfig(
-            name: name,
-            url: url,
-            tokenId: tokenId,
-            secret: secret
-        )
-        settings.addServer(newServer)
+    private func save() {
+        if var server = existingServer {
+            // Update
+            server.name = name
+            server.url = url
+            server.tokenId = tokenId
+            server.secret = secret
+            settings.updateServer(server)
+        } else {
+            // Create
+            let newServer = ProxmoxServerConfig(
+                name: name,
+                url: url,
+                tokenId: tokenId,
+                secret: secret
+            )
+            settings.addServer(newServer)
+        }
         dismiss()
     }
 }

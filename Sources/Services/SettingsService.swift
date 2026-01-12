@@ -50,6 +50,16 @@ class SettingsService: ObservableObject {
         }
     }
     
+    func updateServer(_ server: ProxmoxServerConfig) {
+        if let index = servers.firstIndex(where: { $0.id == server.id }) {
+            servers[index] = server
+        }
+    }
+    
+    func moveServer(from source: IndexSet, to destination: Int) {
+        servers.move(fromOffsets: source, toOffset: destination)
+    }
+    
     var isEmpty: Bool {
         return servers.isEmpty
     }
