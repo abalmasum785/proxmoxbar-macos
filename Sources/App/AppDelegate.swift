@@ -10,7 +10,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         appState = ProxmoxAppState()
         
         popover = NSPopover()
-        popover.contentSize = NSSize(width: 380, height: 500)
+        popover.contentSize = NSSize(width: 420, height: 500)
         popover.behavior = .transient
         
         let launchService = LaunchAtLoginService()
@@ -23,7 +23,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 launchService: launchService,
                 updaterController: updaterController
             )
-                .frame(width: 380, height: 500)
+                .frame(width: 420, height: 500)
         )
         
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
