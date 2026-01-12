@@ -3,14 +3,30 @@
     <channel>
         <title>ProxmoxBar</title>
         <item>
-            <title>1.0.6</title>
-            <pubDate>Mon, 12 Jan 2026 15:28:35 +0000</pubDate>
-            <sparkle:version>1.0.6</sparkle:version>
-            <sparkle:shortVersionString>1.0.6</sparkle:shortVersionString>
+            <title>1.0.7</title>
+            <pubDate>Mon, 12 Jan 2026 19:22:15 +0000</pubDate>
+            <sparkle:version>1.0.7</sparkle:version>
+            <sparkle:shortVersionString>1.0.7</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/ryzenixx/proxmoxbar-macos/releases/download/v1.0.6/ProxmoxBar.dmg" length="1296354" type="application/octet-stream" sparkle:edSignature="x5K3X7y4mdIbFsvW7DB4PJx9qHk2KCAsGjfVrY3PI7txf2VZ21llLy2LP9Qb33ojQR4AUDYay2rwmmoV23mGCA=="/>
-        <description><![CDATA[<h1 id="release-1.0.6">Release 1.0.6</h1>
+            <enclosure url="https://github.com/ryzenixx/proxmoxbar-macos/releases/download/v1.0.7/ProxmoxBar.dmg" length="1305068" type="application/octet-stream" sparkle:edSignature="Kb21ULHuxp7D72NE6mElt7QGYakKvsQrrHreB4s/Xg0NPAhgLhnLUTwMko//os+mUYR5S7lFItITRq8ZVlgfBg=="/>
+        <description><![CDATA[<h1 id="release-1.0.7">Release 1.0.7</h1>
 <h3 id="features">Features</h3>
+<ul>
+<li><strong>Resource Sorting</strong>: Added a new sort menu to organize
+your VMs and LXCs.
+<ul>
+<li><strong>Sort Options</strong>: Choose between <strong>ID</strong>
+(default), <strong>Name</strong>, or <strong>Status</strong>.</li>
+<li><strong>Smart Status Sort</strong>: The “Status” option prioritizes
+running resources, keeping them at the top of the list for quick
+access.</li>
+<li><strong>Persistence</strong>: Your sort preference is saved
+automatically.</li>
+</ul></li>
+</ul>
+<hr />
+<h1 id="release-1.0.6">Release 1.0.6</h1>
+<h3 id="features-1">Features</h3>
 <ul>
 <li><strong>Server Management</strong>:
 <ul>
