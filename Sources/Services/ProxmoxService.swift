@@ -163,7 +163,7 @@ actor ProxmoxService {
         }
     }
     
-    func performNodeAction(node: String, vmid: Int, type: String, action: String, url: String, authHeader: String) async throws {
+    func performNodeAction(node: String, vmid: Int, type: String, action: String, url: String, authHeader: String) async throws -> String {
         guard let baseURL = URL(string: url) else { throw ProxmoxError.invalidURL }
         
         let endpoint = baseURL.appendingPathComponent("/api2/json/nodes/\(node)/\(type)/\(vmid)/status/\(action)")
@@ -186,6 +186,54 @@ actor ProxmoxService {
             let errorMsg = String(data: data, encoding: .utf8) ?? "Unknown Error"
             throw ProxmoxError.apiError(httpResponse.statusCode, "Action Failed: \(errorMsg)")
         }
+        
+        do {
+            let result = try JSONDecoder().decode(UPIDResponse.self, from: data)
+            return result.data
+        } catch {
+            throw ProxmoxError.decodingError(error)
+        }
     }
+    
+    func waitForTask(node: String, upid: String, url: String, authHeader: String) async throws {
+        guard let baseURL = URL(string: url) else { throw ProxmoxError.invalidURL }
+        
+        let endpoint = baseURL.appendingPathComponent("/api2/json/nodes/\(node)/tasks/\(upid)/status")
+        
+        var request = URLRequest(url: endpoint)
+        request.httpMethod = "GET"
+        request.setValue(authHeader, forHTTPHeaderField: "Authorization")
+        request.cachePolicy = .reloadIgnoringLocalCacheData
+        
 
+        // Poll for up to 30 seconds
+        for _ in 0..<30 {
+            let (data, _) = try await session.data(for: request)
+            
+            if let task = try? JSONDecoder().decode(TaskStatusResponse.self, from: data).data, task.isStopped {
+                guard task.isSuccess else {
+                    throw ProxmoxError.apiError(500, "Task failed: \(task.exitstatus ?? "Unknown")")
+                }
+                return
+            }
+            try? await Task.sleep(nanoseconds: 1_000_000_000)
+        }
+        
+        throw ProxmoxError.networkError(NSError(domain: "Task Timeout", code: -1, userInfo: [NSLocalizedDescriptionKey: "Task timed out"]))
+    }
+}
+
+private struct UPIDResponse: Decodable {
+    let data: String
+}
+
+private struct TaskStatusResponse: Decodable {
+    struct TaskData: Decodable {
+        let status: String
+        let exitstatus: String?
+        
+        var isStopped: Bool { status == "stopped" }
+        var isSuccess: Bool { exitstatus == "OK" }
+    }
+    let data: TaskData
 }

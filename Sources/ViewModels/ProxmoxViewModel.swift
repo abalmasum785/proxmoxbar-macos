@@ -11,6 +11,7 @@ class ProxmoxViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var searchText: String = ""
     @Published var isRefreshing: Bool = false
+    @Published var processingVMIDs: Set<Int> = []
     
     enum ResourceFilter: String, CaseIterable {
         case all = "All"
@@ -33,7 +34,6 @@ class ProxmoxViewModel: ObservableObject {
     private var settings: SettingsService
     private var cancellables = Set<AnyCancellable>()
     
-    private var isActionInProgress = false
     private let service = ProxmoxService()
     
     init(settings: SettingsService) {
@@ -96,7 +96,6 @@ class ProxmoxViewModel: ObservableObject {
     }
     
     func loadData() async {
-        guard !isActionInProgress else { return }
         
         await MainActor.run {
             if self.selectedServerId == nil || !self.settings.servers.contains(where: { $0.id == self.selectedServerId }) {
@@ -151,16 +150,23 @@ class ProxmoxViewModel: ObservableObject {
     }
     
     func toggleVMState(_ vm: ProxmoxVM) async {
+        let action = vm.isRunning ? "shutdown" : "start"
+        await executeAction(action, on: vm, verifyStatusChange: true)
+    }
+    
+    func restartVM(_ vm: ProxmoxVM) async {
+        await executeAction("reboot", on: vm, verifyStatusChange: false)
+    }
+    
+    private func executeAction(_ action: String, on vm: ProxmoxVM, verifyStatusChange: Bool) async {
         guard let serverId = vm.serverId,
               let server = settings.servers.first(where: { $0.id == serverId }) else { return }
         
-        isActionInProgress = true
-        defer { isActionInProgress = false }
-        
-        let action = vm.isRunning ? "shutdown" : "start"
+        processingVMIDs.insert(vm.vmid)
+        defer { processingVMIDs.remove(vm.vmid) }
         
         do {
-            try await service.performNodeAction(
+            let upid = try await service.performNodeAction(
                 node: vm.node,
                 vmid: vm.vmid,
                 type: vm.type,
@@ -168,38 +174,28 @@ class ProxmoxViewModel: ObservableObject {
                 url: server.url,
                 authHeader: server.authHeader
             )
-            try? await Task.sleep(nanoseconds: 1_000_000_000)
+            
+            try await service.waitForTask(node: vm.node, upid: upid, url: server.url, authHeader: server.authHeader)
+            
+            if verifyStatusChange {
+                await waitForFinalStatus(for: vm)
+            }
+            
             await loadData()
+            
         } catch {
             await MainActor.run {
-                self.errorMessage = "Action failed: \(error.localizedDescription)"
+                self.errorMessage = "\(action.capitalized) failed: \(error.localizedDescription)"
             }
         }
     }
     
-    func restartVM(_ vm: ProxmoxVM) async {
-        guard let serverId = vm.serverId,
-              let server = settings.servers.first(where: { $0.id == serverId }) else { return }
-        
-        isActionInProgress = true
-        defer { isActionInProgress = false }
-        
-        do {
-            try await service.performNodeAction(
-                node: vm.node,
-                vmid: vm.vmid,
-                type: vm.type,
-                action: "reboot",
-                url: server.url,
-                authHeader: server.authHeader
-            )
-            try? await Task.sleep(nanoseconds: 1_000_000_000)
+    private func waitForFinalStatus(for vm: ProxmoxVM) async {
+        let targetStatus = vm.isRunning ? "stopped" : "running"
+        for _ in 0..<30 {
             await loadData()
-        } catch {
-            await MainActor.run {
-                self.errorMessage = "Restart failed: \(error.localizedDescription)"
-            }
+            if vms.first(where: { $0.vmid == vm.vmid })?.status == targetStatus { return }
+            try? await Task.sleep(nanoseconds: 1_000_000_000)
         }
     }
-
 }
