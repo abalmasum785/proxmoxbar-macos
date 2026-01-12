@@ -3,14 +3,27 @@
     <channel>
         <title>ProxmoxBar</title>
         <item>
-            <title>1.0.4</title>
-            <pubDate>Mon, 12 Jan 2026 11:38:35 +0000</pubDate>
-            <sparkle:version>1.0.4</sparkle:version>
-            <sparkle:shortVersionString>1.0.4</sparkle:shortVersionString>
+            <title>1.0.5</title>
+            <pubDate>Mon, 12 Jan 2026 14:13:25 +0000</pubDate>
+            <sparkle:version>1.0.5</sparkle:version>
+            <sparkle:shortVersionString>1.0.5</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/ryzenixx/proxmoxbar-macos/releases/download/v1.0.4/ProxmoxBar.dmg" length="1270099" type="application/octet-stream" sparkle:edSignature="jxAjOVDPH+tRemcRmwStp9SIEduY7B8qSprzR7hlHvjvvjMp5kp/CfeTix1kZeg3eHV99YWBBBwTxnJHLf5pCQ=="/>
-        <description><![CDATA[<h1 id="release-1.0.4">Release 1.0.4</h1>
+            <enclosure url="https://github.com/ryzenixx/proxmoxbar-macos/releases/download/v1.0.5/ProxmoxBar.dmg" length="1272999" type="application/octet-stream" sparkle:edSignature="uYBCWVw8xmOIls76t7MwWpsQABhYdl16ra36ELSy7lh53BMOl42vo7XpqOZy1h/AEd7ReCCoJVlWUWuAqNrlCw=="/>
+        <description><![CDATA[<h1 id="release-1.0.5">Release 1.0.5</h1>
 <h3 id="fixed">Fixed</h3>
+<ul>
+<li><strong>Dark Mode Detection</strong>: Improved logic to robustly
+detect Dark Mode on all system configurations.
+<ul>
+<li>Previously, the app could incorrectly fallback to “Light Mode”
+colors (darker/forest tones) even when Dark Mode was active.</li>
+<li>Now uses <code>NSAppearance.bestMatch</code> for 100% reliable
+detection, restoring the vibrant “neon” colors for Dark Mode users.</li>
+</ul></li>
+</ul>
+<hr />
+<h1 id="release-1.0.4">Release 1.0.4</h1>
+<h3 id="fixed-1">Fixed</h3>
 <ul>
 <li><strong>UI Contrast</strong>: Fixed readability issue in Light Mode
 where usage statistics (CPU/RAM/Disk) appeared as white text on a light
