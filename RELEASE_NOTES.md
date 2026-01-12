@@ -1,3 +1,13 @@
+# Release 1.0.7
+
+### Features
+- **Resource Sorting**: Added a new sort menu to organize your VMs and LXCs.
+  - **Sort Options**: Choose between **ID** (default), **Name**, or **Status**.
+  - **Smart Status Sort**: The "Status" option prioritizes running resources, keeping them at the top of the list for quick access.
+  - **Persistence**: Your sort preference is saved automatically.
+
+---
+
 # Release 1.0.6
 
 ### Features
