@@ -3,29 +3,25 @@
     <channel>
         <title>ProxmoxBar</title>
         <item>
-            <title>1.0.3</title>
-            <pubDate>Mon, 12 Jan 2026 11:10:52 +0000</pubDate>
-            <sparkle:version>1.0.3</sparkle:version>
-            <sparkle:shortVersionString>1.0.3</sparkle:shortVersionString>
+            <title>1.0.4</title>
+            <pubDate>Mon, 12 Jan 2026 11:38:35 +0000</pubDate>
+            <sparkle:version>1.0.4</sparkle:version>
+            <sparkle:shortVersionString>1.0.4</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/ryzenixx/proxmoxbar-macos/releases/download/v1.0.3/ProxmoxBar.dmg" length="1269101" type="application/octet-stream" sparkle:edSignature="qr5FJxuWu5XZ07iDtSGIwVkKo64FQHYFoeiolCch7oAIDe/9XyAhK545XfL02xaZWjYCG/llyG5eA9IRG+pmCA=="/>
-        <description><![CDATA[<h1 id="release-1.0.3">Release 1.0.3 🚀</h1>
-<h3 id="added">Added</h3>
+            <enclosure url="https://github.com/ryzenixx/proxmoxbar-macos/releases/download/v1.0.4/ProxmoxBar.dmg" length="1270099" type="application/octet-stream" sparkle:edSignature="jxAjOVDPH+tRemcRmwStp9SIEduY7B8qSprzR7hlHvjvvjMp5kp/CfeTix1kZeg3eHV99YWBBBwTxnJHLf5pCQ=="/>
+        <description><![CDATA[<h1 id="release-1.0.4">Release 1.0.4</h1>
+<h3 id="fixed">Fixed</h3>
 <ul>
-<li><strong>Restart Action</strong>: Added a dedicated “Restart” button
-for running VMs.</li>
-<li><strong>Action Feedback</strong>: Visual loading state (spinner) on
-buttons while an action (Start/Stop/Restart) is processing.</li>
-<li><strong>Stability</strong>: Implemented “Smart Polling” using
-Proxmox UPID. The UI now waits for the server to confirm the task is
-fully completed before unlocking, preventing “flickering” states.</li>
-</ul>
-<h3 id="changed">Changed</h3>
-<ul>
-<li><strong>UI</strong>: Increased main window width (380px -&gt; 420px)
-to comfortably fit new action buttons.</li>
-<li><strong>Performance</strong>: Optimized status verification loop to
-handle server latency gracefully.</li>
+<li><strong>UI Contrast</strong>: Fixed readability issue in Light Mode
+where usage statistics (CPU/RAM/Disk) appeared as white text on a light
+background. Changed to adaptive system colors for perfect contrast in
+both Light and Dark modes.</li>
+<li><strong>Light Mode Colors</strong>: Adjusted Green/Red/Orange status
+colors to be less “neon” and more legible when using Light Mode, while
+retaining the vibrant look in Dark Mode.</li>
+<li><strong>Transparency</strong>: Added a subtle background tint to
+improve legibility on colorful wallpapers while maintaining the frosted
+glass effect.</li>
 </ul>
 ]]></description></item>
     </channel>
