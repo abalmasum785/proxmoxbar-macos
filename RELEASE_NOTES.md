@@ -1,10 +1,10 @@
-# Release 1.0.2 🖥️
+# Release 1.0.3 🚀
 
 ### Added
-- **Cluster Stats**: Added a unified "Datacenter" view in the header showing aggregated CPU, RAM, and Disk usage for the entire cluster.
-- **Storage**: Improved storage calculation by retrieving all storage pools from the cluster (`/cluster/resources`), ensuring accurate total disk usage reporting.
-- **UI**: Added dynamic color coding for resource gauges (Gray/Orange/Red) based on usage thresholds.
+- **Restart Action**: Added a dedicated "Restart" button for running VMs.
+- **Action Feedback**: Visual loading state (spinner) on buttons while an action (Start/Stop/Restart) is processing.
+- **Stability**: Implemented "Smart Polling" using Proxmox UPID. The UI now waits for the server to confirm the task is fully completed before unlocking, preventing "flickering" states.
 
 ### Changed
-- **Architecture**: Refactored statistics to focus on Cluster-level aggregation rather than individual nodes in the header.
-- **UI**: Simplified the header statistics display for a cleaner, reliable look.
+- **UI**: Increased main window width (380px -> 420px) to comfortably fit new action buttons.
+- **Performance**: Optimized status verification loop to handle server latency gracefully.
