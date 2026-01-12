@@ -27,7 +27,33 @@ class ProxmoxViewModel: ObservableObject {
         }
     }
     
+    enum SortOption: String, CaseIterable {
+        case id = "ID"
+        case name = "Name"
+        case status = "Status"
+        
+        var icon: String {
+            switch self {
+            case .id: return "list.number"
+            case .name: return "textformat"
+            case .status: return "bolt.fill"
+            }
+        }
+    }
+    
     @Published var resourceFilter: ResourceFilter = .all
+    
+    @Published var sortOption: SortOption = {
+        if let saved = UserDefaults.standard.string(forKey: "SortOption"),
+           let option = SortOption(rawValue: saved) {
+            return option
+        }
+        return .id
+    }() {
+        didSet {
+            UserDefaults.standard.set(sortOption.rawValue, forKey: "SortOption")
+        }
+    }
 
     @Published var selectedServerId: UUID? = nil
     
@@ -63,6 +89,19 @@ class ProxmoxViewModel: ObservableObject {
             result = result.filter { $0.type == "qemu" }
         case .lxc:
             result = result.filter { $0.type == "lxc" }
+        }
+        
+        switch sortOption {
+        case .id:
+            result.sort { $0.vmid < $1.vmid }
+        case .name:
+            result.sort { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+        case .status:
+            result.sort {
+                if $0.isRunning && !$1.isRunning { return true }
+                if !$0.isRunning && $1.isRunning { return false }
+                return $0.vmid < $1.vmid
+            }
         }
         
         return result

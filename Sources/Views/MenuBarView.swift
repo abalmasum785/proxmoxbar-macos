@@ -236,6 +236,32 @@ struct MenuBarView: View {
                     }
                     .menuStyle(.borderlessButton)
                     .fixedSize()
+                    
+                    Divider()
+                        .frame(height: 12)
+                    
+                    Menu {
+                        ForEach(ProxmoxViewModel.SortOption.allCases, id: \.self) { option in
+                            Button {
+                                viewModel.sortOption = option
+                            } label: {
+                                if viewModel.sortOption == option {
+                                    Label(option.rawValue, systemImage: "checkmark")
+                                } else {
+                                    Label(option.rawValue, systemImage: option.icon)
+                                }
+                            }
+                        }
+                    } label: {
+                        Image(systemName: "arrow.up.arrow.down")
+                            .font(.system(size: 11, weight: .medium))
+                            .foregroundColor(.secondary)
+                            .padding(.horizontal, 4)
+                            .padding(.vertical, 4)
+                            .contentShape(Rectangle())
+                    }
+                    .menuStyle(.borderlessButton)
+                    .fixedSize()
                 }
                 .padding(10)
                 .background(Color.primary.opacity(0.05))
