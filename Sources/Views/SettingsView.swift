@@ -6,11 +6,15 @@ struct SettingsView: View {
     @ObservedObject var updaterController: UpdaterController
     var onBack: () -> Void
     
-    @State private var showAddServer = false
+    @State private var showServerForm = false
+    @State private var editingServer: ProxmoxServerConfig? = nil
     @State private var serverToDelete: ProxmoxServerConfig?
+    
+    @State private var draggedItem: ProxmoxServerConfig?
     
     var body: some View {
         VStack(spacing: 0) {
+            // Header
             HStack(spacing: 12) {
                 Button(action: onBack) {
                     Image(systemName: "chevron.left")
@@ -44,7 +48,8 @@ struct SettingsView: View {
                                 .foregroundColor(.secondary)
                             Spacer()
                             Button {
-                                showAddServer = true
+                                editingServer = nil
+                                showServerForm = true
                             } label: {
                                 Image(systemName: "plus")
                                     .font(.system(size: 12, weight: .bold))
@@ -72,6 +77,16 @@ struct SettingsView: View {
                                         Spacer()
                                         
                                         Button {
+                                            editingServer = server
+                                            showServerForm = true
+                                        } label: {
+                                            Image(systemName: "pencil")
+                                                .foregroundColor(.secondary)
+                                        }
+                                        .buttonStyle(.plain)
+                                        .padding(.trailing, 4)
+                                        
+                                        Button {
                                             serverToDelete = server
                                         } label: {
                                             Image(systemName: "trash")
@@ -82,6 +97,11 @@ struct SettingsView: View {
                                     .padding(10)
                                     .background(Color.primary.opacity(0.03))
                                     .cornerRadius(8)
+                                    .onDrag {
+                                        self.draggedItem = server
+                                        return NSItemProvider(object: server.id.uuidString as NSString)
+                                    }
+                                    .onDrop(of: [.text], delegate: DropViewDelegate(destinationItem: server, servers: $settings.servers, draggedItem: $draggedItem))
                                 }
                             }
                         }
@@ -205,8 +225,8 @@ struct SettingsView: View {
             .padding(.bottom, 16)
         }
         .background(CursorFixView())
-        .sheet(isPresented: $showAddServer) {
-            AddServerView(settings: settings)
+        .sheet(isPresented: $showServerForm) {
+            ServerFormView(settings: settings, existingServer: editingServer)
         }
         .alert(item: $serverToDelete) { server in
             Alert(
@@ -217,6 +237,34 @@ struct SettingsView: View {
                 },
                 secondaryButton: .cancel()
             )
+        }
+    }
+}
+
+struct DropViewDelegate: DropDelegate {
+    let destinationItem: ProxmoxServerConfig
+    @Binding var servers: [ProxmoxServerConfig]
+    @Binding var draggedItem: ProxmoxServerConfig?
+    
+    func dropUpdated(info: DropInfo) -> DropProposal? {
+        return DropProposal(operation: .move)
+    }
+    
+    func performDrop(info: DropInfo) -> Bool {
+        self.draggedItem = nil
+        return true
+    }
+    
+    func dropEntered(info: DropInfo) {
+        guard let draggedItem = self.draggedItem else { return }
+        
+        if draggedItem != destinationItem {
+            let from = servers.firstIndex(of: draggedItem)!
+            let to = servers.firstIndex(of: destinationItem)!
+            
+            withAnimation {
+                servers.move(fromOffsets: IndexSet(integer: from), toOffset: to > from ? to + 1 : to)
+            }
         }
     }
 }
