@@ -7,11 +7,15 @@ echo "📦 Bundling Application..."
 rm -rf .build
 rm -rf ProxmoxBar.app
 
-# Build
-swift build -c release --arch arm64
+# Build Universal
+swift build -c release --arch arm64 --arch x86_64
 
 # Define Paths
-EXECUTABLE_PATH=".build/arm64-apple-macosx/release/ProxmoxBar"
+EXECUTABLE_PATH=".build/apple/Products/Release/ProxmoxBar"
+if [ ! -f "$EXECUTABLE_PATH" ]; then
+    echo "❌ Universal binary not found at expected path: $EXECUTABLE_PATH"
+    exit 1
+fi
 BUNDLE_PATH="./ProxmoxBar.app"
 CONTENTS_PATH="$BUNDLE_PATH/Contents"
 RESOURCES_PATH="$CONTENTS_PATH/Resources"
