@@ -272,14 +272,48 @@ struct SettingsView: View {
                     .foregroundColor(.secondary.opacity(0.6))
                 #endif
                 
-                Button("View on GitHub") {
-                    if let url = URL(string: "https://github.com/ryzenixx/proxmoxbar-macos") {
-                        NSWorkspace.shared.open(url)
+                HStack(spacing: 12) {
+                    Button {
+                        if let url = URL(string: "https://github.com/ryzenixx/proxmoxbar-macos") {
+                            NSWorkspace.shared.open(url)
+                        }
+                    } label: {
+                        HStack(spacing: 4) {
+                            Image(systemName: "chevron.left.forwardslash.chevron.right")
+                                .font(.system(size: 10))
+                            Text("View on GitHub")
+                        }
+                        .font(.caption2)
+                        .foregroundColor(Color(red: 0.6, green: 0.4, blue: 0.9))
+                    }
+                    .buttonStyle(.plain)
+                    .onHover { inside in
+                        inside ? NSCursor.pointingHand.push() : NSCursor.pop()
+                    }
+
+                    Text("|")
+                        .font(.caption2)
+                        .foregroundColor(.secondary.opacity(0.3))
+
+                    Button {
+                        if let url = URL(string: "https://ko-fi.com/ryzenixx") {
+                            NSWorkspace.shared.open(url)
+                        }
+                    } label: {
+                        HStack(spacing: 4) {
+                            Image(systemName: "cup.and.saucer.fill")
+                                .font(.system(size: 10))
+                            Text("Buy me a coffee")
+                        }
+                        .font(.caption2)
+                        .foregroundColor(Color(red: 1.0, green: 0.37, blue: 0.0))
+                    }
+                    .buttonStyle(.plain)
+                    .onHover { inside in
+                        inside ? NSCursor.pointingHand.push() : NSCursor.pop()
                     }
                 }
-                .buttonStyle(.link)
-                .font(.caption2)
-                .padding(.top, 2)
+                .padding(.top, 4)
             }
             .padding(.bottom, 16)
         }
