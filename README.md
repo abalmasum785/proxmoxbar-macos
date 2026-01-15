@@ -38,7 +38,7 @@
 ## 🛠 Under the Hood
 
 **ProxmoxBar** is built with **Swift** and **SwiftUI** for maximum performance.
-It features secure, sandboxed auto-updates and follows modern macOS security standards.
+It features secure auto-updates and follows modern macOS security standards.
 Requires **macOS 14 (Sonoma)** or later.
 
 ## 🚀 Installation
