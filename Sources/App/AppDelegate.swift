@@ -5,6 +5,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var statusItem: NSStatusItem!
     var popover: NSPopover!
     var appState: ProxmoxAppState!
+    var eventMonitor: EventMonitor?
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Initialize NotificationManager to ensure delegate is set
@@ -16,7 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         popover = NSPopover()
         popover.contentSize = NSSize(width: 420, height: 500)
-        popover.behavior = .transient
+        popover.behavior = .applicationDefined
         
         let launchService = LaunchAtLoginService()
         let updaterController = UpdaterController()
@@ -39,6 +40,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             button.target = self
             button.sendAction(on: [.leftMouseUp, .rightMouseUp])
         }
+        
+        eventMonitor = EventMonitor(mask: [.leftMouseDown, .rightMouseDown]) { [weak self] _ in
+            Task { @MainActor [weak self] in
+                self?.closePopover(sender: nil)
+            }
+        }
     }
     
     @MainActor
@@ -53,12 +60,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             statusItem.menu = nil
         } else {
             if popover.isShown {
-                popover.performClose(sender)
+                closePopover(sender: sender)
             } else {
                 if let button = statusItem.button {
                     Task { await appState.viewModel.loadData() }
                     
                     popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
+                    eventMonitor?.start()
                     NSApp.activate(ignoringOtherApps: true)
                 }
             }
@@ -90,5 +98,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         
         return NSImage(systemSymbolName: "server.rack", accessibilityDescription: nil) ?? NSImage()
+    }
+    
+    @MainActor
+    func closePopover(sender: Any?) {
+        popover.performClose(sender)
+        eventMonitor?.stop()
     }
 }
